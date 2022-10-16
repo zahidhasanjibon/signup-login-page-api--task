@@ -1,9 +1,18 @@
 import React, { useContext } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
+import facebookLogo from '../assets/img/icons8-facebook-48.png';
+import githubLogo from '../assets/img/icons8-github-50.png';
+import googleLogo from '../assets/img/icons8-google-48.png';
 import { userContext } from './UserContext';
 
 export default function Register() {
-    const { signUp, updateProfileName } = useContext(userContext);
+    const {
+        signUp,
+        updateProfileName,
+        loginWithgoogle,
+        loginWithFacebook,
+        loginWithGithub
+    } = useContext(userContext);
 
     const navigate = useNavigate();
 
@@ -25,14 +34,42 @@ export default function Register() {
             .catch((err) => console.log(err));
     };
 
+    const handleLoginWithGoogle = () => {
+        loginWithgoogle()
+            .then(() => {
+                navigate('/');
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
+    const handleLoginWithFacebook = () => {
+        loginWithFacebook()
+            .then(() => {
+                navigate('/');
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
+    const handleLoginWithGithub = () => {
+        loginWithGithub()
+            .then(() => {
+                navigate('/');
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
+
     return (
         <div className="hero h-[91vh] bg-base-200">
-            <div className="hero-content flex-col">
+            <div className="hero-content flex-col w-[370px]">
                 <div className="text-center lg:text-left">
-                    <h1 className="text-5xl font-bold">Register now!</h1>
+                    <h1 className="text-3xl font-bold">Register now!</h1>
                 </div>
                 <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-                    <form onSubmit={handleSignUp} className="card-body">
+                    <form onSubmit={handleSignUp} className="px-6 py-2">
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text">Name</span>
@@ -83,6 +120,39 @@ export default function Register() {
                             </button>
                         </div>
                     </form>
+                    <div className="mx-auto" id="or">
+                        or
+                    </div>
+
+                    <div className="mx-auto flex justify-center pb-5">
+                        <div className="go p-2 rounded-md">
+                            <button onClick={handleLoginWithGoogle}>
+                                <img
+                                    className="cursor-pointer"
+                                    src={googleLogo}
+                                    alt=""
+                                />
+                            </button>
+                        </div>
+                        <div className="fa p-2 rounded-md mx-4">
+                            <button onClick={handleLoginWithFacebook}>
+                                <img
+                                    className="cursor-pointer"
+                                    src={facebookLogo}
+                                    alt=""
+                                />
+                            </button>
+                        </div>
+                        <div className="git p-2 rounded-md">
+                            <button onClick={handleLoginWithGithub}>
+                                <img
+                                    className="cursor-pointer"
+                                    src={githubLogo}
+                                    alt=""
+                                />
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -4,7 +4,6 @@ import { userContext } from './UserContext';
 
 export default function Navbar() {
     const { user, logOut, isLoading } = useContext(userContext);
-    console.log(user);
 
     const handleLogout = () => {
         logOut()

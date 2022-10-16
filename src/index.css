@@ -11,3 +11,48 @@
 .active-menu {
     background-color: #582fbe;
 }
+#or {
+    position: relative;
+    width: 280px;
+    height: 50px;
+
+    line-height: 50px;
+    text-align: center;
+}
+
+#or::before,
+#or::after {
+    position: absolute;
+    width: 110px;
+    height: 1px;
+
+    top: 24px;
+
+    background-color: rgb(197, 216, 190);
+
+    content: '';
+}
+
+#or::before {
+    left: 0;
+}
+
+#or::after {
+    right: 0px;
+}
+
+.go {
+    background: #f5ebeb;
+    width: 50px;
+    height: 50px;
+}
+.fa {
+    background: #636060;
+    width: 50px;
+    height: 50px;
+}
+.git {
+    background: #a99c9c;
+    width: 50px;
+    height: 50px;
+}

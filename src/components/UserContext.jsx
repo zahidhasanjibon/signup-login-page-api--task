@@ -1,6 +1,8 @@
 import {
     createUserWithEmailAndPassword,
+    FacebookAuthProvider,
     getAuth,
+    GithubAuthProvider,
     GoogleAuthProvider,
     onAuthStateChanged,
     signInWithEmailAndPassword,
@@ -36,6 +38,14 @@ export default function UserContext({ children }) {
         const Provider = new GoogleAuthProvider();
         return signInWithPopup(auth, Provider);
     };
+    const loginWithFacebook = () => {
+        const Provider = new FacebookAuthProvider();
+        return signInWithPopup(auth, Provider);
+    };
+    const loginWithGithub = () => {
+        const Provider = new GithubAuthProvider();
+        return signInWithPopup(auth, Provider);
+    };
 
     useEffect(() => {
         const subs = onAuthStateChanged(auth, (userinfo) => {
@@ -60,7 +70,9 @@ export default function UserContext({ children }) {
         updateProfileName,
         logOut,
         isLoading,
-        loginWithgoogle
+        loginWithgoogle,
+        loginWithFacebook,
+        loginWithGithub
     };
 
     return (
