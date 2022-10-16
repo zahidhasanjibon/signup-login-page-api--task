@@ -21,6 +21,7 @@ module.exports = {
         'react/button-has-type': 0,
         'jsx-a11y/label-has-associated-control': 0,
         'no-alert': 0,
+        'jsx-a11y/anchor-is-valid': 0,
         'prettier/prettier': [
             'error',
             {
