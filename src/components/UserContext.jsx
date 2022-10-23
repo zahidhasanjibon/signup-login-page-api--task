@@ -5,6 +5,8 @@ import {
     GithubAuthProvider,
     GoogleAuthProvider,
     onAuthStateChanged,
+    sendEmailVerification,
+    sendPasswordResetEmail,
     signInWithEmailAndPassword,
     signInWithPopup,
     signOut,
@@ -18,33 +20,48 @@ const auth = getAuth(app);
 
 // eslint-disable-next-line react/prop-types
 export default function UserContext({ children }) {
-    // eslint-disable-next-line no-unused-vars
     const [user, setUser] = useState({});
     const [isLoading, setIsLoading] = useState(true);
+    const [isError, setIsError] = useState('');
+    const [isResetError, setIsResetError] = useState('');
+    console.log(user);
 
     const signUp = (email, password) => {
         return createUserWithEmailAndPassword(auth, email, password);
     };
     const signIn = (email, password) => {
+        setIsLoading(true);
         return signInWithEmailAndPassword(auth, email, password);
     };
     const logOut = () => {
+        setIsLoading(true);
         return signOut(auth);
     };
     const updateProfileName = (name) => {
         return updateProfile(auth.currentUser, { displayName: name });
     };
     const loginWithgoogle = () => {
+        setIsLoading(true);
         const Provider = new GoogleAuthProvider();
         return signInWithPopup(auth, Provider);
     };
     const loginWithFacebook = () => {
+        setIsLoading(true);
         const Provider = new FacebookAuthProvider();
         return signInWithPopup(auth, Provider);
     };
     const loginWithGithub = () => {
+        setIsLoading(true);
         const Provider = new GithubAuthProvider();
         return signInWithPopup(auth, Provider);
+    };
+
+    const forgotPassword = (email) => {
+        return sendPasswordResetEmail(auth, email);
+    };
+
+    const verifyEmail = () => {
+        return sendEmailVerification(auth.currentUser);
     };
 
     useEffect(() => {
@@ -72,7 +89,14 @@ export default function UserContext({ children }) {
         isLoading,
         loginWithgoogle,
         loginWithFacebook,
-        loginWithGithub
+        loginWithGithub,
+        setIsLoading,
+        isError,
+        setIsError,
+        forgotPassword,
+        isResetError,
+        setIsResetError,
+        verifyEmail
     };
 
     return (

@@ -1,25 +1,34 @@
 import React, { useContext } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { userContext } from './UserContext';
 
 export default function Login() {
-    const { signIn } = useContext(userContext);
+    const { signIn, setIsLoading, setIsError, isError } =
+        useContext(userContext);
+
     const navigate = useNavigate();
+    const location = useLocation();
+
+    const from = location.state?.from?.pathname || '/';
 
     const handleLogin = (e) => {
         e.preventDefault();
-
         const form = e.target;
         const email = form.email.value;
         const password = form.password.value;
 
         signIn(email, password)
             .then(() => {
+                setIsError('');
                 form.reset();
-                navigate('/');
+                navigate(from, { replace: true });
             })
             .catch((err) => {
+                setIsError(err.message);
                 console.log(err);
+            })
+            .finally(() => {
+                setIsLoading(false);
             });
     };
 
@@ -62,6 +71,7 @@ export default function Login() {
                                     Forgot password?
                                 </NavLink>
                             </label>
+                            {isError && <p>{isError}</p>}
                         </div>
                         <div className="form-control mt-6">
                             <button className="btn btn-primary">Login</button>

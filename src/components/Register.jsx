@@ -1,4 +1,5 @@
-import React, { useContext } from 'react';
+import React, { useContext, useRef, useState } from 'react';
+import toast from 'react-hot-toast';
 import { NavLink, useNavigate } from 'react-router-dom';
 import facebookLogo from '../assets/img/icons8-facebook-48.png';
 import githubLogo from '../assets/img/icons8-github-50.png';
@@ -6,15 +7,42 @@ import googleLogo from '../assets/img/icons8-google-48.png';
 import { userContext } from './UserContext';
 
 export default function Register() {
+    const [isError, setIsError] = useState('');
+    // eslint-disable-next-line no-unused-vars
+    const [imagePreview, setImgPreview] = useState('');
     const {
         signUp,
         updateProfileName,
         loginWithgoogle,
         loginWithFacebook,
-        loginWithGithub
+        loginWithGithub,
+        verifyEmail
     } = useContext(userContext);
 
     const navigate = useNavigate();
+    const nameRef = useRef(null);
+
+    const sendveryfyEMail = () => {
+        verifyEmail()
+            .then(() => {
+                toast.success('please verify your email');
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
+    const handleFileUpload = (e) => {
+        console.log('iii');
+        const reader = new FileReader();
+
+        reader.onload = () => {
+            if (reader.readyState === 2) {
+                setImgPreview(reader.result);
+            }
+        };
+
+        reader.readAsDataURL(e.target.files[0]);
+    };
 
     const handleSignUp = (e) => {
         e.preventDefault();
@@ -28,16 +56,22 @@ export default function Register() {
                 form.reset();
                 navigate('/');
                 updateProfileName(name)
-                    .then(() => {})
+                    .then(() => {
+                        sendveryfyEMail();
+                    })
                     .catch((err) => console.log(err));
             })
-            .catch((err) => console.log(err));
+            .catch((err) => {
+                setIsError(err.message);
+                console.log(err);
+            });
     };
 
     const handleLoginWithGoogle = () => {
         loginWithgoogle()
             .then(() => {
                 navigate('/');
+                sendveryfyEMail();
             })
             .catch((err) => {
                 console.log(err);
@@ -47,6 +81,7 @@ export default function Register() {
         loginWithFacebook()
             .then(() => {
                 navigate('/');
+                sendveryfyEMail();
             })
             .catch((err) => {
                 console.log(err);
@@ -56,6 +91,7 @@ export default function Register() {
         loginWithGithub()
             .then(() => {
                 navigate('/');
+                sendveryfyEMail();
             })
             .catch((err) => {
                 console.log(err);
@@ -75,6 +111,7 @@ export default function Register() {
                                 <span className="label-text">Name</span>
                             </label>
                             <input
+                                ref={nameRef}
                                 type="text"
                                 name="name"
                                 placeholder="name"
@@ -105,6 +142,16 @@ export default function Register() {
                                 className="input input-bordered"
                                 required
                             />
+
+                            <input
+                                // eslint-disable-next-line no-undef
+                                onChange={(e) => handleFileUpload(e)}
+                                className="mt-3 mb-2 border border-gray-500 block w-full text-sm text-gray-900 bg-slate-500 rounded-lg  cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700  dark:placeholder-gray-400"
+                                id="file_input"
+                                type="file"
+                                accept="image/*"
+                            />
+
                             <label className="label">
                                 <NavLink
                                     to="/login"
@@ -113,6 +160,7 @@ export default function Register() {
                                     have an account?
                                 </NavLink>
                             </label>
+                            {isError && <p>{isError}</p>}
                         </div>
                         <div className="form-control mt-6">
                             <button type="submit" className="btn btn-primary">
