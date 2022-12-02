@@ -21,10 +21,11 @@ const auth = getAuth(app);
 // eslint-disable-next-line react/prop-types
 export default function UserContext({ children }) {
     const [user, setUser] = useState({});
+    const [userImg, setUserImg] = useState('');
+    const [userName, setUserName] = useState('');
     const [isLoading, setIsLoading] = useState(true);
     const [isError, setIsError] = useState('');
     const [isResetError, setIsResetError] = useState('');
-    console.log(user);
 
     const signUp = (email, password) => {
         return createUserWithEmailAndPassword(auth, email, password);
@@ -37,8 +38,8 @@ export default function UserContext({ children }) {
         setIsLoading(true);
         return signOut(auth);
     };
-    const updateProfileName = (name) => {
-        return updateProfile(auth.currentUser, { displayName: name });
+    const updateProfileName = (name, photoURL) => {
+        return updateProfile(auth.currentUser, { displayName: name, photoURL });
     };
     const loginWithgoogle = () => {
         setIsLoading(true);
@@ -96,7 +97,11 @@ export default function UserContext({ children }) {
         forgotPassword,
         isResetError,
         setIsResetError,
-        verifyEmail
+        verifyEmail,
+        userImg,
+        userName,
+        setUserImg,
+        setUserName
     };
 
     return (

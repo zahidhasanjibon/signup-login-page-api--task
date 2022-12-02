@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useContext, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import { NavLink, useNavigate } from 'react-router-dom';
@@ -9,14 +10,18 @@ import { userContext } from './UserContext';
 export default function Register() {
     const [isError, setIsError] = useState('');
     // eslint-disable-next-line no-unused-vars
-    const [imagePreview, setImgPreview] = useState('');
+
+    const [imgPreview, setImgPreview] = useState('');
+
     const {
         signUp,
         updateProfileName,
         loginWithgoogle,
         loginWithFacebook,
         loginWithGithub,
-        verifyEmail
+        verifyEmail,
+        setUserImg,
+        setUserName
     } = useContext(userContext);
 
     const navigate = useNavigate();
@@ -31,12 +36,40 @@ export default function Register() {
                 console.log(err);
             });
     };
+    console.log(imgPreview);
+
+    // eslint-disable-next-line no-unused-vars
+    const uploadImagetoServer = async (result, name) => {
+        // try {
+        // const res = await fetch('http://localhost:5000/');
+        // const d = await res.json();
+        // console.log(d);
+        // const res = await fetch('http://localhost:5000/imgupload', {
+        //     method: 'post',
+        //     headers: { 'Content-Type': 'application/json' },
+        //     body: JSON.stringify({
+        //         avatar: result
+        //     })
+        // });
+        // const data = await res.json();
+        // console.log(data);
+        //     updateProfileName(name, data.secure_url)
+        //         .then(() => {
+        //             sendveryfyEMail();
+        //             setUserImg(data.secure_url);
+        //             setUserName(name);
+        //         })
+        //         .catch((err) => console.log(err));
+        // } catch (error) {
+        //     console.log(error);
+        // }
+    };
     const handleFileUpload = (e) => {
-        console.log('iii');
         const reader = new FileReader();
 
         reader.onload = () => {
             if (reader.readyState === 2) {
+                console.log(reader.result);
                 setImgPreview(reader.result);
             }
         };
@@ -54,12 +87,10 @@ export default function Register() {
         signUp(email, password)
             .then(() => {
                 form.reset();
+                console.log(imgPreview);
+                uploadImagetoServer(imgPreview, name);
+
                 navigate('/');
-                updateProfileName(name)
-                    .then(() => {
-                        sendveryfyEMail();
-                    })
-                    .catch((err) => console.log(err));
             })
             .catch((err) => {
                 setIsError(err.message);
@@ -100,7 +131,7 @@ export default function Register() {
 
     return (
         <div className="hero h-[91vh] bg-base-200">
-            <div className="hero-content flex-col w-[370px]">
+            <div className="hero-content flex-col w-[370px] mx-auto">
                 <div className="text-center lg:text-left">
                     <h1 className="text-3xl font-bold">Register now!</h1>
                 </div>
@@ -144,7 +175,6 @@ export default function Register() {
                             />
 
                             <input
-                                // eslint-disable-next-line no-undef
                                 onChange={(e) => handleFileUpload(e)}
                                 className="mt-3 mb-2 border border-gray-500 block w-full text-sm text-gray-900 bg-slate-500 rounded-lg  cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700  dark:placeholder-gray-400"
                                 id="file_input"

@@ -1,0 +1,83 @@
+.cont {
+    width: 1440px;
+    height: 660px;
+    border: 2px solid red;
+    margin: 0 auto;
+}
+.img {
+    width: 612px;
+    height: 437px;
+}
+.btn {
+    width: 142px;
+    height: 49px;
+    padding: 15px 20px;
+    background: #1678cb;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 15px;
+    color: white;
+    border: 1px solid #1678cb;
+}
+input {
+    border: none;
+    border-bottom: 2px solid #b4b4b4;
+    background-color: white;
+    outline: none;
+}
+.login-text {
+    color: #1678cb;
+    font-size: 14px;
+    cursor: pointer;
+    text-decoration: underline;
+    font-weight: bold;
+    padding-left: 10px;
+}
+.footer-text {
+    color: #7e7e7e;
+    font-weight: 500;
+    text-align: right;
+    font-size: 12px;
+}
+.form-card {
+    background: #ffffff;
+    box-shadow: 1px -10px 25px rgba(201, 201, 201, 0.25),
+        -1px 10px 25px rgba(147, 147, 147, 0.25);
+}
+.btn:hover {
+    background-color: white;
+    color: #1678cb;
+    font-weight: 500;
+}
+.back-btn {
+    color: #767676;
+}
+.pass-label {
+    color: #7e7e7e;
+    font-size: 12px;
+}
+.login-btn {
+    width: 104px;
+    height: 49px;
+    padding: 12px 20px 15px 20px;
+    background: #1678cb;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 15px;
+    color: white;
+    border: 1px solid #1678cb;
+}
+.signup-btn {
+    width: 104px;
+    height: 49px;
+    padding: 12px 20px 15px 20px;
+    background: #1678cb;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 15px;
+    color: white;
+    border: 1px solid #1678cb;
+}
+.attendence-title {
+    border-radius: 5px;
+    background-color: #1678cb;
+    font-size: 32px;
+    font-weight: 600;
+}
